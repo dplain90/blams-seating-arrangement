@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <ul>
+    <li
+      data-id="arbitrary-id-1"
+    >
+      jack
+    </li>
+    <li
+      data-id="second-id"
+    >
+      Javcob
+    </li>
+    <li
+      data-id="2"
+    >
+      Yoyoma
+    </li>
+  </ul>
+</div>
+`;
