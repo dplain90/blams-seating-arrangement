@@ -21,14 +21,21 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
 import java.util.logging.Logger;
+import hibernate.*;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 /**
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
 public class HelloWorldServer {
   private static final Logger logger = Logger.getLogger(HelloWorldServer.class.getName());
-
+  private SessionFactory sessionFactory;
   private Server server;
 
   private void start() throws IOException {
@@ -68,16 +75,51 @@ public class HelloWorldServer {
       server.awaitTermination();
     }
   }
-
+  
   /**
    * Main launches the server from the command line.
    */
   public static void main(String[] args) throws IOException, InterruptedException {
     final HelloWorldServer server = new HelloWorldServer();
+    
+    server.setUp();
+    server.createGuest();
     server.start();
+
     server.blockUntilShutdown();
   }
+private void createGuest() {
+  Session session = this.sessionFactory.openSession();
+    session.beginTransaction();
+    session.save( new Guest( "Johnny" ) );
+    session.getTransaction().commit();
+    session.close();
 
+    session = sessionFactory.openSession();
+session.beginTransaction();
+List<Guest> result = (List<Guest>) session.createQuery( "from Guest" ).list();
+for ( Guest guest : result ) {
+    System.out.println( "Guest (" + guest.getName() );
+}
+session.getTransaction().commit();
+session.close();
+}
+protected void setUp()  {
+	// A SessionFactory is set up once for an application!
+	final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+			.configure() // configures settings from hibernate.cfg.xml
+			.build();
+	try {
+		sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
+
+	}
+	catch (Exception e) {
+		// The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
+		// so destroy it manually.
+    System.out.println( e.getMessage() );
+		StandardServiceRegistryBuilder.destroy( registry );
+	}
+}
   static class GreeterImpl extends GreeterGrpc.GreeterImplBase {
 
     @Override

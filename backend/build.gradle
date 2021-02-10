@@ -14,8 +14,8 @@ repositories {
     mavenLocal()
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 // IMPORTANT: You probably want the non-SNAPSHOT version of gRPC. Make sure you
 // are looking at a tagged version of the example and not "master"!
@@ -28,7 +28,10 @@ def protocVersion = protobufVersion
 
 dependencies {
     implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "org.hibernate:hibernate-core:5.4.28.Final"
     implementation "io.grpc:grpc-stub:${grpcVersion}"
+    implementation "com.h2database:h2:1.4.197"
+
     compileOnly "org.apache.tomcat:annotations-api:6.0.53"
 
     // examples/advanced need this for JsonFormat
