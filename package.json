@@ -1,0 +1,21 @@
+{
+  "name": "blams-seating-arrangement",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:proto:js": "sh ./scripts/build-proto-js.sh",
+    "start:envoy": "envoy -c envoy.yaml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dplain90/blams-seating-arrangement.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dplain90/blams-seating-arrangement/issues"
+  },
+  "homepage": "https://github.com/dplain90/blams-seating-arrangement#readme"
+}
