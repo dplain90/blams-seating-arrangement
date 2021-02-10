@@ -1,0 +1,1 @@
+# blams-seating-arrangement
